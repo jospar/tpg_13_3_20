@@ -1,0 +1,27 @@
+apiVersion: v1
+kind: Service
+metadata:
+  creationTimestamp: 2019-11-01T09:33:11Z
+  labels:
+    run: tpg-sctp-app
+  name: mysvc
+  namespace: default
+  resourceVersion: "10483"
+  selfLink: /api/v1/namespaces/default/services/tpg-sctp-app
+  uid: 9ed69039-fc8a-11e9-8d5e-34e6d734c766
+spec:
+  selector:
+    app: tpg-sctp-app
+  ports:
+  - name: tpgsctp
+    port: 15000
+    targetPort: 15000
+    nodePort: 30336
+    protocol: TCP
+  selector:
+    run: tpg-sctp-app
+  sessionAffinity: None
+status:
+  loadBalancer: {}
+
+

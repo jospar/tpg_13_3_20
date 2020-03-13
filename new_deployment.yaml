@@ -1,0 +1,101 @@
+{
+  "kind": "Deployment",
+  "apiVersion": "extensions/v1beta1",
+  "metadata": {
+    "name": "tpgfinal",
+    "namespace": "default",
+    "selfLink": "/apis/extensions/v1beta1/namespaces/default/deployments/tpgfinal",
+    "uid": "70fbe6a4-db7e-11e9-ae82-00e04c6837ea",
+    "resourceVersion": "460868",
+    "generation": 6,
+    "creationTimestamp": "2019-09-20T08:12:51Z",
+    "labels": {
+      "run": "tpgfinal"
+    },
+    "annotations": {
+      "deployment.kubernetes.io/revision": "5"
+    }
+  },
+  "spec": {
+    "replicas": 2,
+    "selector": {
+      "matchLabels": {
+        "run": "tpgfinal"
+      }
+    },
+    "template": {
+      "metadata": {
+        "creationTimestamp": null,
+        "labels": {
+          "run": "tpgfinal"
+        }
+      },
+      "spec": {
+        "containers": [
+          {
+            "name": "tpgfinal",
+            "image": "imjospar/kubetpg:3.0",
+            "command": [
+              "./home/tcsubuntu/Demo/Src/tpg"
+            ],
+            "ports": [
+              {
+                "containerPort": 12000,
+                "protocol": "TCP"
+              }
+            ],
+            "env": [
+              {
+                "name": "DOMAIN",
+                "value": "cluster"
+              }
+            ],
+            "resources": {},
+            "terminationMessagePath": "/dev/termination-log",
+            "terminationMessagePolicy": "File",
+            "imagePullPolicy": "IfNotPresent"
+          }
+        ],
+        "restartPolicy": "Always",
+        "terminationGracePeriodSeconds": 30,
+        "dnsPolicy": "ClusterFirst",
+        "securityContext": {},
+        "schedulerName": "default-scheduler"
+      }
+    },
+    "strategy": {
+      "type": "RollingUpdate",
+      "rollingUpdate": {
+        "maxUnavailable": "25%",
+        "maxSurge": "25%"
+      }
+    },
+    "revisionHistoryLimit": 2,
+    "progressDeadlineSeconds": 600
+  },
+  "status": {
+    "observedGeneration": 6,
+    "replicas": 2,
+    "updatedReplicas": 2,
+    "readyReplicas": 2,
+    "availableReplicas": 2,
+    "conditions": [
+      {
+        "type": "Progressing",
+        "status": "True",
+        "lastUpdateTime": "2019-09-24T07:42:39Z",
+        "lastTransitionTime": "2019-09-20T08:12:51Z",
+        "reason": "NewReplicaSetAvailable",
+        "message": "ReplicaSet \"tpgfinal-6d5f5bc7\" has successfully progressed."
+      },
+      {
+        "type": "Available",
+        "status": "True",
+        "lastUpdateTime": "2019-09-24T10:20:48Z",
+        "lastTransitionTime": "2019-09-24T10:20:48Z",
+        "reason": "MinimumReplicasAvailable",
+        "message": "Deployment has minimum availability."
+      }
+    ]
+  }
+}

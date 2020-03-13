@@ -1,0 +1,72 @@
+kind: Deployment
+apiVersion: extensions/v1beta1
+metadata:
+  name: tpg-sctp-app
+  namespace: default
+  selfLink: /apis/extensions/v1beta1/namespaces/default/deployments/tpg-sctp-app
+  uid: 56912aa0-fbb0-11e9-af60-34e6d734c766
+  resourceVersion: '3895'
+  generation: 2
+  creationTimestamp: '2019-10-31T07:30:39Z'
+  labels:
+    run: tpg-sctp-app
+  annotations:
+    deployment.kubernetes.io/revision: '2'
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      run: tpg-sctp-app
+  template:
+    metadata:
+      creationTimestamp: null
+      labels:
+        run: tpg-sctp-app
+    spec:
+      containers:
+        - name: tpg-sctp-app
+          image: 'imjospar/tpgsctp:2.0'
+          command:
+            - ./home/tcsubuntu/sctp_tpg/tpgsctp
+          ports:
+            - containerPort: 15000
+              protocol: TCP
+          env:
+            - name: DOMAIN
+              value: cluster
+          resources: {}
+          terminationMessagePath: /dev/termination-log
+          terminationMessagePolicy: File
+          imagePullPolicy: IfNotPresent
+      restartPolicy: Always
+      terminationGracePeriodSeconds: 30
+      dnsPolicy: ClusterFirst
+      securityContext: {}
+      schedulerName: default-scheduler
+  strategy:
+    type: RollingUpdate
+    rollingUpdate:
+      maxUnavailable: 25%
+      maxSurge: 25%
+  revisionHistoryLimit: 2
+  progressDeadlineSeconds: 600
+status:
+  observedGeneration: 2
+  replicas: 1
+  updatedReplicas: 1
+  readyReplicas: 1
+  availableReplicas: 1
+  conditions:
+    - type: Available
+      status: 'True'
+      lastUpdateTime: '2019-10-31T07:30:42Z'
+      lastTransitionTime: '2019-10-31T07:30:42Z'
+      reason: MinimumReplicasAvailable
+      message: Deployment has minimum availability.
+    - type: Progressing
+      status: 'True'
+      lastUpdateTime: '2019-10-31T07:53:20Z'
+      lastTransitionTime: '2019-10-31T07:30:39Z'
+      reason: NewReplicaSetAvailable
+      message: ReplicaSet "tpg-sctp-app-86bd8c87cb" has successfully progressed.
+
